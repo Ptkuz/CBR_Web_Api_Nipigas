@@ -11,5 +11,16 @@
     <Style TargetType="ComboBox">
         <Setter Property="Width" Value="200"/>
     </Style>
+    <Style TargetType="DataGrid">
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="CanUserDeleteRows" Value="False"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="GridLinesVisibility" Value="Vertical"/>
+        <Setter Property="VerticalGridLinesBrush" Value="DarkBlue"/>
+        <Setter Property="AlternatingRowBackground" Value="LightBlue"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+    </Style>
+
 
 </ResourceDictionary>

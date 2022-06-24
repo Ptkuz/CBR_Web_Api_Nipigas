@@ -79,7 +79,13 @@ namespace CBR_Web_Api.ViewModels
         {
             this.xmlDocument = xmlDocument;
             this.userDialog = userDialog;
-            MainViewSource = new CollectionViewSource();
+            MainViewSource = new CollectionViewSource()
+            {
+               SortDescriptions = 
+                {
+                     new SortDescription(nameof(XmlValute.Date), ListSortDirection.Descending)
+                }
+            };
         }
 
         private ICommand loadDataCommand;

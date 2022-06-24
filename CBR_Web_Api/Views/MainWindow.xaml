@@ -35,8 +35,8 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Дата" Binding="{Binding Path=Date}"/>
                     <DataGridTextColumn Header="Номинал" Binding="{Binding Path=Nominal}"/>
-                    <DataGridTextColumn Header="Стоимость за еденицу" Binding="{Binding Path=Value}"/>
-                    <DataGridTextColumn Header="Общая стоимость" Binding="{Binding Path=AllValue}"/>
+                    <DataGridTextColumn Header="Стоимость за еденицу" Binding="{Binding Path=Value, StringFormat=N2}"/>
+                    <DataGridTextColumn Header="Общая стоимость" Binding="{Binding Path=AllValue, StringFormat=N2}"/>
                 </DataGrid.Columns>
             </DataGrid>
 
