@@ -23,6 +23,8 @@
                       DisplayMemberPath="CharCodeName"
                       SelectedValuePath="CharCode"/>
             <Button Content="Вывести" Command="{Binding Path=LoadValutaCommand}"/>
+            <ProgressBar Width="200" Margin="20,0,0,0" Maximum="100" Value="{Binding Path=ProgressValue}"/>
+            <TextBlock MinWidth="30" TextAlignment="Right" Text="{Binding Path=ProgressValue}"/>
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>

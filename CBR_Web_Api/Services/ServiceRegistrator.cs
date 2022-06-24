@@ -8,6 +8,7 @@ namespace CBR_Web_Api.Services
         public static IServiceCollection AddServices(this IServiceCollection services)
             => services
             .AddTransient<IGetXML, GetXML>()
+            .AddTransient<IUserDialog, UserDialog>()
             ;
     }
 }

@@ -2,9 +2,12 @@
 using CBR_Web_Api.Services.Intrerfaces;
 using MathCore.WPF.Commands;
 using MathCore.WPF.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -14,14 +17,29 @@ namespace CBR_Web_Api.ViewModels
     internal class MainWindowViewMiodel : ViewModel
     {
         private IGetXML xmlDocument;
+        private IUserDialog userDialog;
         private CollectionViewSource MainViewSource;
+        private CancellationTokenSource ProcessCancellation;
         public ICollectionView ElementsView { get { return MainViewSource.View; } }
+
+
+        #region Значение прогресса
+
+        private double progressValue;
+        public double ProgressValue
+        {
+            get { return progressValue; }
+            set { Set(ref progressValue, value); }
+
+        }
+        #endregion
+
 
         private string tittle = "Курсы валют";
         public string Title { get => tittle; set => Set(ref tittle, value); }
 
-        private XmlCharCode selectedCode;
-        public XmlCharCode SelectedCode
+        private XmlCharCode? selectedCode;
+        public XmlCharCode? SelectedCode
         {
             get => selectedCode;
             set
@@ -57,12 +75,10 @@ namespace CBR_Web_Api.ViewModels
         public ObservableCollection<XmlCharCode> CharCodeCollections { get => charCodeCollections; set => Set(ref charCodeCollections, value); }
 
 
-
-
-
-        public MainWindowViewMiodel(IGetXML xmlDocument)
+        public MainWindowViewMiodel(IGetXML xmlDocument, IUserDialog userDialog)
         {
             this.xmlDocument = xmlDocument;
+            this.userDialog = userDialog;
             MainViewSource = new CollectionViewSource();
         }
 
@@ -75,8 +91,19 @@ namespace CBR_Web_Api.ViewModels
 
 
         private async Task OnLoadDataCommandExecutedAsync(object? obj)
-        {            
-            CharCodeCollections = (await xmlDocument.ReadAllCharCodeAsync().ToArrayAsync()).ToObservableCollection();
+        {
+            try
+            {
+                CharCodeCollections = (await xmlDocument.ReadAllCharCodeAsync().ToArrayAsync()).ToObservableCollection();
+            }
+            catch (HttpRequestException)
+            {
+                userDialog.ConfirmError("Проблема с подключением!", "Внимание!");
+            }
+            catch (Exception)
+            {
+                userDialog.ConfirmError("Непредвиденная ошибка!", "Внимание!");
+            }
         }
 
         private ICommand loadValutaCommand;
@@ -86,10 +113,24 @@ namespace CBR_Web_Api.ViewModels
         private bool CanLoadValutaCommandExecute(object? arg)
             => true;
 
-        private async Task OnLoadValutaCommandExecutedAsync(object? obj) 
+        private async Task OnLoadValutaCommandExecutedAsync(object? obj)
         {
-            var document = await xmlDocument.ReadyXMLAsync(SelectedCodeStr);
-            ElementCollections = xmlDocument.ReadXmlValutes(document).ToArray().ToObservableCollection();
+            try
+            {
+                var progressValue = new Progress<double>(p => ProgressValue = p);
+                ProcessCancellation = new CancellationTokenSource();
+
+                var document = await xmlDocument.ReadyXMLAsync(SelectedCodeStr, progress: progressValue, cancel: ProcessCancellation.Token);
+                ElementCollections = xmlDocument.ReadXmlValutes(document).ToArray().ToObservableCollection();
+            }
+            catch (HttpRequestException) 
+            {
+                userDialog.ConfirmError("Проблема с подключением!", "Внимание!");
+            }
+            catch (Exception)
+            {
+                userDialog.ConfirmError("Непредвиденная ошибка!", "Внимание!");
+            }
         }
     }
 }

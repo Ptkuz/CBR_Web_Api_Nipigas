@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using CBR_Web_Api.ViewModels;
+using CBR_Web_Api.Services.Intrerfaces;
 
 namespace CBR_Web_Api.ViewModels
 {
