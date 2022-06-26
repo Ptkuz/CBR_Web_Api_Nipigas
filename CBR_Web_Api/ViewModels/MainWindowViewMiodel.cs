@@ -81,13 +81,14 @@ namespace CBR_Web_Api.ViewModels
             this.userDialog = userDialog;
             MainViewSource = new CollectionViewSource()
             {
-               SortDescriptions = 
+                SortDescriptions =
                 {
                      new SortDescription(nameof(XmlValute.Date), ListSortDirection.Descending)
                 }
             };
         }
 
+        #region Загрузка CharCode для отображения в ComboBox при загрузке формы
         private ICommand loadDataCommand;
         public ICommand LoadDataCommand => loadDataCommand
             ??= new LambdaCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
@@ -111,7 +112,10 @@ namespace CBR_Web_Api.ViewModels
                 userDialog.ConfirmError("Непредвиденная ошибка!", "Внимание!");
             }
         }
+        #endregion
 
+
+        #region Загрузка данных о валютах
         private ICommand loadValutaCommand;
         public ICommand LoadValutaCommand => loadValutaCommand
             ??= new LambdaCommandAsync(OnLoadValutaCommandExecutedAsync, CanLoadValutaCommandExecute);
@@ -138,5 +142,6 @@ namespace CBR_Web_Api.ViewModels
                 userDialog.ConfirmError("Непредвиденная ошибка!", "Внимание!");
             }
         }
+        #endregion
     }
 }

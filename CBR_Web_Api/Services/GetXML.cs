@@ -17,6 +17,7 @@ namespace CBR_Web_Api.Services
     {
        
 
+        // Получение 20 документов XML через API Центробанка и выборка нужных данных в новый документ
         public async Task<XDocument> ReadyXMLAsync(string charCode, IProgress<double> progress = null, CancellationToken cancel = default)
         {
             try
@@ -96,6 +97,8 @@ namespace CBR_Web_Api.Services
 
             }
         }
+
+
 
 
         public IEnumerable<XmlValute> ReadXmlValutes(XDocument document)

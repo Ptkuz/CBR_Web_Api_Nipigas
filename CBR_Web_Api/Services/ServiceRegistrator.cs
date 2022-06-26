@@ -5,6 +5,8 @@ namespace CBR_Web_Api.Services
 {
     internal static class ServiceRegistrator
     {
+
+        // Регистрация сервисов
         public static IServiceCollection AddServices(this IServiceCollection services)
             => services
             .AddTransient<IGetXML, GetXML>()

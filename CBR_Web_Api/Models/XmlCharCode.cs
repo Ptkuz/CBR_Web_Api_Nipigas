@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace CBR_Web_Api.Models
 {
+
+    // Модель для получаения CharCode и преобразования его имени в нужный формат отображения
     internal class XmlCharCode
     {
         public string? CharCode { get; set; }

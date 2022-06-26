@@ -11,6 +11,9 @@ namespace CBR_Web_Api
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+    /// 
+
+    // Настрока сервисов и переопределение методов запуска и остановки
     public partial class App : Application
     {
         public static bool IsDesignTrue { get; private set; } = true;

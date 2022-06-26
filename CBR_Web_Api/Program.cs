@@ -3,8 +3,12 @@ using Microsoft.Extensions.Hosting;
 
 namespace CBR_Web_Api
 {
+    // Создаем класс Program, чтобы можно было запустить HostBuilder. В настроках проекта нужно было
+    // настроить точку входа в приложение Program.cs
     internal class Program
     {
+
+        
         [STAThread]
         static void Main(string[] args) 
         {

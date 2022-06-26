@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace CBR_Web_Api.Models
 {
+
+    // Модель Валюты для отображения в DataGrid
     internal class XmlValute
     {
         public string? Date { get; set; }
